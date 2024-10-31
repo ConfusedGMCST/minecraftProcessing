@@ -1,6 +1,7 @@
-int heightLimit = 9;
+int heightLimit = 9; //HEIGHT NEEDS TO MATCH CHUNKDEPTH. WILL FIX LATER.
 int chunkDepth = 9;
 
+//nRandom class is just an int random class in order to round the float random to an int
 class nRandom {
   private int least;
   private int greatest;
@@ -8,17 +9,15 @@ class nRandom {
   
   public nRandom(int least, int greatest) {
     float resultCalc =  random(least, greatest);
-    if (resultCalc >= (int) resultCalc + 0.5) {
-      this.result = (int) resultCalc + 1;
-    } else {
-      this.result = (int) resultCalc;
-    }
+    this.result = round(resultCalc);
   }
 }
 
 class initChunk {
-  private int topLayer;
+  private int topLayer; //toplayer of ground
   private int biome;
+  
+  //All the axes of the chunk
   private int[] xAxis = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   private int[] yAxis = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   private int[] zAxis = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -30,8 +29,10 @@ class initChunk {
   }
   
   void genPlanes() {
+    //loops through the zAxis and also sets it depending on the current index
     for (int i = chunkDepth; i >= 0; i--) {
       zAxis[i] = i;
+      //loops through the yAxis and sets the xVal accordingly
       for (int v = heightLimit; v >= 0; v--) {
         yAxis[v] = v;
         if (yAxis[v] <= topLayer) {
@@ -47,6 +48,7 @@ class initChunk {
         } else {
           xAxis[v] = 0;
         }
+        //prints the xyz values
         getDepth(i, v);
       }
     }
@@ -57,6 +59,7 @@ class initChunk {
   }
 }
 
+//chunk of origin
 initChunk originChunk = new initChunk(3, 0);
 
 void setup() {
